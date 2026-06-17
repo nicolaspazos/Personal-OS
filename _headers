@@ -1,0 +1,4 @@
+# Cloudflare Pages headers — always revalidate so updates show immediately after deploy.
+/*
+  Cache-Control: no-cache
+  X-Content-Type-Options: nosniff
