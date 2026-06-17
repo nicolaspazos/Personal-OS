@@ -35,6 +35,18 @@ Pin that tab. Open it in the morning and at night.
 > Your data lives in **this browser** (`localStorage`). It never leaves your machine. Use a
 > different browser/profile = a fresh OS. Back it up anytime from **⚙ → Export**.
 
+### Run as a desktop app (Windows)
+
+Double-click **`Nicolas OS.exe`** on your Desktop. It quietly starts the local server and opens your
+OS in your browser — close the little console window to quit. The exe is **standalone** (no Python
+needed) and serves the live repo, so your `config.js` edits still apply.
+
+Prefer no exe? Double-click **`Launch Nicolas OS.bat`** in this folder instead (needs Python).
+Either way it runs on a fixed port (`8787`), so your saved data persists across launches.
+
+> Rebuild the exe anytime: `pip install pyinstaller` then
+> `pyinstaller --onefile --name "Nicolas OS" launch_nicolas_os.py`.
+
 ---
 
 ## Make it yours — edit `config.js`
