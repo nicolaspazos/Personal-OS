@@ -41,6 +41,13 @@ class QuietHandler(SimpleHTTPRequestHandler):
     def log_message(self, *args):
         pass  # keep the console clean
 
+    def end_headers(self):
+        # Never cache: always serve the latest files so edits show on refresh.
+        self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+        self.send_header("Pragma", "no-cache")
+        self.send_header("Expires", "0")
+        super().end_headers()
+
 
 def port_in_use(port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
