@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="jarvis">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NICOLAS OS</title>
+  <meta name="theme-color" content="#05070a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-vignette"></div>
+  <div class="bg-scan"></div>
+
+  <!-- ====================== BOOT SEQUENCE ====================== -->
+  <div class="boot" id="boot" title="click to skip">
+    <svg class="reactor core" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-opacity=".22" stroke-width="2"/>
+      <circle class="spin" cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="10 8" stroke-opacity=".85"/>
+      <circle class="spin-r" cx="50" cy="50" r="28" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 6" stroke-opacity=".55"/>
+      <circle cx="50" cy="50" r="15" fill="currentColor" fill-opacity=".14"/>
+      <circle class="pulse" cx="50" cy="50" r="8" fill="currentColor"/>
+    </svg>
+    <div class="lines" id="bootLines"></div>
+    <div class="bar"><i id="bootBar"></i></div>
+    <div class="skip">CLICK ANYWHERE TO SKIP</div>
+  </div>
+
+  <div class="app">
+    <!-- ====================== TOP BAR ====================== -->
+    <header class="topbar">
+      <div class="brand">
+        <svg class="reactor" viewBox="0 0 100 100" aria-hidden="true" style="color:var(--accent)">
+          <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-width="3"/>
+          <circle class="spin" cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width="4" stroke-dasharray="10 8" stroke-opacity=".85"/>
+          <circle class="pulse" cx="50" cy="50" r="9" fill="currentColor"/>
+        </svg>
+        <div>
+          <div class="os" id="osName">NICOLAS <b>OS</b></div>
+          <div class="ver" id="osVer">// V1.0</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button data-view="home" class="active">HOME</button>
+        <button data-view="work">WORK</button>
+        <button data-view="growth">GROWTH</button>
+        <button data-view="review">REVIEW</button>
+      </nav>
+
+      <div class="sysline">
+        <span class="tick" id="sysLoc">—</span>
+        <span class="tick"><b id="sysDate">—</b></span>
+        <span class="tick"><b id="sysClock">--:--</b></span>
+        <button class="theme-toggle" id="themeBtn" title="Switch JARVIS / BATMAN">◑ JARVIS</button>
+        <button class="theme-toggle" id="settingsBtn" title="Settings">⚙</button>
+        <span class="dot"></span>
+        <span class="avatar" id="avatar">NP</span>
+      </div>
+    </header>
+
+    <!-- ====================== HOME ====================== -->
+    <section class="view active" id="view-home">
+      <div class="grid home-grid">
+
+        <!-- 01 SESSION -->
+        <div class="panel session col-5">
+          <div class="phead"><span class="id"><b>01</b> // SESSION</span><span class="stat" id="sessState">FOCUS</span></div>
+          <div class="psep"></div>
+          <div class="greet" id="greet">Good evening, <i>Nicolas</i>.</div>
+          <div class="when" id="when">—</div>
+          <div class="clockrow">
+            <div class="clock" id="clock">--:--<span class="sec">:--</span></div>
+            <div class="clockmeta" id="clockMeta">LOCAL<br>DAY — / 365</div>
+          </div>
+          <div class="daybar"><i id="dayFill" style="width:0%"></i></div>
+          <div class="creed" id="creed">—</div>
+          <form class="onething" id="oneThingForm" autocomplete="off">
+            <label>TODAY I WILL</label>
+            <div class="row">
+              <input id="oneThing" placeholder="Set today's one thing…" />
+              <button class="btn" type="submit">SET ↵</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- 03 HABITS (momentum centerpiece) -->
+        <div class="panel col-4">
+          <div class="phead"><span class="id"><b>03</b> // HABITS</span><span class="stat" id="habitStat">0/0 · 0%</span></div>
+          <div class="psep"></div>
+          <div class="habits-top">
+            <div class="ring-wrap">
+              <svg class="ring" viewBox="0 0 36 36" width="92" height="92">
+                <circle class="track" cx="18" cy="18" r="15.9155" fill="none" stroke-width="2.4"/>
+                <circle class="fill" id="habitRing" cx="18" cy="18" r="15.9155" fill="none" stroke-width="2.4" stroke-linecap="round" transform="rotate(-90 18 18)" stroke-dasharray="0 100"/>
+              </svg>
+              <div class="lbl"><b id="habitPct">0%</b><span>TODAY</span></div>
+            </div>
+            <div class="meta">
+              <div class="big" id="habitMsg">Start with one.</div>
+              <div class="small">DAILY SCORE · RESETS 00:00</div>
+            </div>
+          </div>
+          <div class="hlist" id="habitList"></div>
+        </div>
+
+        <!-- 02 OPERATOR -->
+        <div class="panel operator accent2 col-3">
+          <div class="phead"><span class="id"><b>02</b> // OPERATOR</span><span class="stat"><span class="live">●</span> ONLINE</span></div>
+          <div class="psep"></div>
+          <div class="name" id="opName">Nicolas Pazos</div>
+          <div class="sub" id="opSub">Founder · <b>Glint Sites</b></div>
+          <div class="opgrid">
+            <div class="opcell streak"><div class="k">STREAK</div><div class="v"><span id="streakVal">0</span> <small>DAYS</small></div></div>
+            <div class="opcell"><div class="k">FOCUS</div><div class="focus-pick" id="focusPick"></div></div>
+          </div>
+          <div class="chain" id="chain" title="last 14 days"></div>
+        </div>
+
+        <!-- 04 PRIORITIES -->
+        <div class="panel col-5">
+          <div class="phead"><span class="id"><b>04</b> // PRIORITIES</span><span class="stat" id="taskStat">—</span></div>
+          <div class="psep"></div>
+          <form class="addrow" id="taskForm" autocomplete="off">
+            <input id="taskAdd" placeholder="Add a task… (adds to Today)" />
+            <button class="btn" type="submit">+ ADD</button>
+          </form>
+          <div id="taskList"></div>
+        </div>
+
+        <!-- 05 CALENDAR -->
+        <div class="panel col-4">
+          <div class="phead"><span class="id"><b>05</b> // CALENDAR</span><span class="stat" id="calMonth">—</span></div>
+          <div class="psep"></div>
+          <div class="weekstrip" id="weekStrip"></div>
+          <div class="blocks" id="blocks"></div>
+        </div>
+
+        <!-- 06 ACTIVE PROJECT -->
+        <div class="panel accent2 col-3">
+          <div class="phead"><span class="id"><b>06</b> // ACTIVE PROJECT</span><span class="stat js-projPct">0%</span></div>
+          <div class="psep"></div>
+          <div class="proj-head">
+            <div>
+              <div class="nm js-projName">—</div>
+              <div class="mt js-projMeta">—</div>
+            </div>
+            <div class="ring-wrap" style="width:64px;height:64px">
+              <svg class="ring" viewBox="0 0 36 36" width="64" height="64">
+                <circle class="track" cx="18" cy="18" r="15.9155" fill="none" stroke-width="2.6"/>
+                <circle class="fill js-projRing" cx="18" cy="18" r="15.9155" fill="none" stroke-width="2.6" stroke-linecap="round" transform="rotate(-90 18 18)" stroke-dasharray="0 100"/>
+              </svg>
+            </div>
+          </div>
+          <div class="checklist js-projChecklist"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================== WORK (Glint Sites) ====================== -->
+    <section class="view" id="view-work">
+      <div class="grid home-grid">
+        <!-- CRM -->
+        <div class="panel col-8">
+          <div class="phead"><span class="id"><b>W1</b> // GLINT SITES · PIPELINE</span><span class="stat" id="crmStat">—</span></div>
+          <div class="psep"></div>
+          <div class="crm-cols" id="crmCols"></div>
+        </div>
+
+        <!-- Active project (mirror) -->
+        <div class="panel accent2 col-4">
+          <div class="phead"><span class="id"><b>W2</b> // ACTIVE PROJECT</span><span class="stat js-projPct">0%</span></div>
+          <div class="psep"></div>
+          <div class="proj-head">
+            <div>
+              <div class="nm js-projName">—</div>
+              <div class="mt js-projMeta">—</div>
+            </div>
+            <div class="ring-wrap" style="width:64px;height:64px">
+              <svg class="ring" viewBox="0 0 36 36" width="64" height="64">
+                <circle class="track" cx="18" cy="18" r="15.9155" fill="none" stroke-width="2.6"/>
+                <circle class="fill js-projRing" cx="18" cy="18" r="15.9155" fill="none" stroke-width="2.6" stroke-linecap="round" transform="rotate(-90 18 18)" stroke-dasharray="0 100"/>
+              </svg>
+            </div>
+          </div>
+          <div class="checklist js-projChecklist"></div>
+        </div>
+
+        <!-- Blockers -->
+        <div class="panel col-12">
+          <div class="phead"><span class="id"><b>W3</b> // KEY BLOCKERS</span><span class="stat" id="blockStat">—</span></div>
+          <div class="psep"></div>
+          <div class="crm-cols" style="grid-template-columns:1fr 1fr 1fr" id="blockerList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== GROWTH ====================== -->
+    <section class="view" id="view-growth">
+      <div class="grid home-grid">
+
+        <!-- Momentum -->
+        <div class="panel col-4">
+          <div class="phead"><span class="id"><b>G1</b> // MOMENTUM</span><span class="stat">KEEP THE CHAIN</span></div>
+          <div class="psep"></div>
+          <div class="habits-top">
+            <div class="ring-wrap">
+              <svg class="ring" viewBox="0 0 36 36" width="92" height="92">
+                <circle class="track" cx="18" cy="18" r="15.9155" fill="none" stroke-width="2.4"/>
+                <circle class="fill" id="momRing" cx="18" cy="18" r="15.9155" fill="none" stroke-width="2.4" stroke-linecap="round" transform="rotate(-90 18 18)" stroke-dasharray="0 100"/>
+              </svg>
+              <div class="lbl"><b id="momPct">0%</b><span>7-DAY</span></div>
+            </div>
+            <div class="meta">
+              <div class="big"><span id="momStreak">0</span> day streak</div>
+              <div class="small" id="momSub">Win today to start the chain.</div>
+            </div>
+          </div>
+          <div class="chain" id="momChain" style="margin-top:14px" title="last 14 days"></div>
+        </div>
+
+        <!-- Reading -->
+        <div class="panel col-4 book">
+          <div class="phead"><span class="id"><b>G2</b> // READING</span><span class="stat" id="readPctStat">0%</span></div>
+          <div class="psep"></div>
+          <div class="ti" id="readTitle">—</div>
+          <div class="au" id="readAuthor">—</div>
+          <div class="pbar"><i id="readBar" style="width:0%"></i></div>
+          <div class="addrow" style="margin-top:8px">
+            <button class="btn ghost" id="readMinus">−5%</button>
+            <button class="btn ghost" id="readPlus">+5%</button>
+          </div>
+          <div class="nx">NEXT UP · <b id="readNext">—</b></div>
+        </div>
+
+        <!-- Health -->
+        <div class="panel col-4 accent2">
+          <div class="phead"><span class="id"><b>G3</b> // VITALS</span><span class="stat">TODAY</span></div>
+          <div class="psep"></div>
+          <div class="hstats">
+            <div class="hstat"><div class="v" id="hWater">0</div><div class="k" id="hWaterGoal">WATER /8</div><div class="ctl"><button data-h="water" data-d="-1">−</button><button data-h="water" data-d="1">+</button></div></div>
+            <div class="hstat"><div class="v" id="hSteps">0k</div><div class="k" id="hStepsGoal">STEPS /8k</div><div class="ctl"><button data-h="steps" data-d="-1">−</button><button data-h="steps" data-d="1">+</button></div></div>
+            <div class="hstat"><div class="v" id="hSleep">0h</div><div class="k" id="hSleepGoal">SLEEP /8</div><div class="ctl"><button data-h="sleep" data-d="-1">−</button><button data-h="sleep" data-d="1">+</button></div></div>
+          </div>
+        </div>
+
+        <!-- Goals week -->
+        <div class="panel col-6">
+          <div class="phead"><span class="id"><b>G4</b> // GOALS · THIS WEEK</span><span class="stat" id="gwStat">—</span></div>
+          <div class="psep"></div>
+          <div id="goalsWeek"></div>
+          <form class="addrow" id="gwForm" style="margin-top:8px" autocomplete="off">
+            <input id="gwAdd" placeholder="Add a weekly goal…" />
+            <button class="btn" type="submit">+</button>
+          </form>
+        </div>
+
+        <!-- Goals month -->
+        <div class="panel col-6 accent2">
+          <div class="phead"><span class="id"><b>G5</b> // GOALS · THIS MONTH</span><span class="stat" id="gmStat">—</span></div>
+          <div class="psep"></div>
+          <div id="goalsMonth"></div>
+          <form class="addrow" id="gmForm" style="margin-top:8px" autocomplete="off">
+            <input id="gmAdd" placeholder="Add a monthly goal…" />
+            <button class="btn" type="submit">+</button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================== REVIEW ====================== -->
+    <section class="view" id="view-review">
+      <div class="grid home-grid">
+        <div class="panel col-12">
+          <div class="phead"><span class="id"><b>R0</b> // WEEKLY REVIEW</span><span class="stat" id="reviewWeek">—</span></div>
+          <div class="psep"></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <div class="when" id="reviewRange">—</div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <span class="stat" id="reviewSaved" style="color:var(--ok)">AUTO-SAVED</span>
+              <button class="btn" id="sealBtn">SEAL WEEK ✓</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel col-12">
+          <div class="review-grid" id="reviewGrid"></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ====================== SETTINGS DRAWER ====================== -->
+  <div class="drawer-bg" id="drawerBg"></div>
+  <aside class="drawer" id="drawer">
+    <h3>⚙ SYSTEM</h3>
+    <p>Your data lives only in this browser. Edit <b>config.js</b> to change the starting content. Use the buttons below to back up or reset.</p>
+    <button class="btn ghost" id="exportBtn">⤓ EXPORT DATA (JSON)</button>
+    <button class="btn ghost" id="importBtn">⤒ IMPORT DATA</button>
+    <input type="file" id="importFile" accept="application/json" hidden />
+    <button class="btn ghost" id="themeBtn2">◑ SWITCH THEME</button>
+    <button class="btn ghost" id="bootBtn">▶ REPLAY BOOT</button>
+    <button class="btn ghost" id="resetBtn" style="border-color:var(--hot);color:var(--hot)">⟲ RESET TODAY</button>
+    <button class="btn ghost" id="wipeBtn" style="border-color:var(--hot);color:var(--hot)">⨯ WIPE ALL DATA</button>
+    <p style="margin-top:18px;font-size:10px">NICOLAS OS · local-first · no servers, no accounts, no cost.</p>
+  </aside>
+
+  <div class="toast" id="toast">—</div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

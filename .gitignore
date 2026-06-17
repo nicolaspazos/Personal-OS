@@ -1,0 +1,15 @@
+# Build artifacts (exe packaging)
+build/
+dist/
+*.spec
+__pycache__/
+*.pyc
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local env / secrets
+.env
+*.local
