@@ -60,7 +60,7 @@ def main():
     except Exception:
         pass
 
-    url = "http://localhost:{}/index.html".format(PORT)
+    url = "http://localhost:{}/index.html?t={}".format(PORT, int(time.time()))
 
     # Already running? Just open it and exit.
     if port_in_use(PORT):
