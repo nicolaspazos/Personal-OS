@@ -31,7 +31,7 @@ window.CONFIG = {
     osName: "NICOLAS OS",      // shown top-left
     version: "V1.0",
     // Default theme: "jarvis" (cyan) or "batman" (amber/gold). Toggle live in the UI.
-    defaultTheme: "jarvis",
+    defaultTheme: "matrix",
     // Boot sequence lines (JARVIS-style). Keep them short.
     bootLines: [
       "INITIALIZING NICOLAS OS",
