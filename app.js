@@ -27,7 +27,7 @@
   function rawDel(k) { try { localStorage.removeItem(k); } catch (e) { delete mem[k]; } }
   function load(key, fb) { var r = rawGet(NS + key); if (r == null) return fb; try { return JSON.parse(r); } catch (e) { return fb; } }
   function save(key, val) { rawSet(NS + key, JSON.stringify(val)); }
-  var STORE_KEYS = ["days", "tasks", "project", "clients", "goals", "reading", "reviews", "theme", "tab", "blockers"];
+  var STORE_KEYS = ["days", "tasks", "project", "clients", "goals", "reading", "reviews", "theme.user", "tab", "blockers"];
 
   /* ---------- date helpers ---------- */
   function dateKey(d) {
@@ -447,16 +447,17 @@
 
   /* ============================== THEME + MATRIX RAIN ============================== */
   var THEMES = ["jarvis", "batman", "matrix"];
-  function applyTheme(th) {
-    if (THEMES.indexOf(th) < 0) th = "jarvis";
+  var DEFAULT_THEME = (CFG.system && CFG.system.defaultTheme) || "matrix";
+  function applyTheme(th, persist) {
+    if (THEMES.indexOf(th) < 0) th = DEFAULT_THEME;
     document.documentElement.setAttribute("data-theme", th);
     if (el("themeBtn")) el("themeBtn").textContent = "◑ " + th.toUpperCase();
-    save("theme", th);
+    if (persist) save("theme.user", th);   // only remember a theme the user actually picks
     if (th === "matrix") startRain(); else stopRain();
   }
   function toggleTheme() {
-    var cur = document.documentElement.getAttribute("data-theme") || "jarvis";
-    applyTheme(THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length]);
+    var cur = document.documentElement.getAttribute("data-theme") || DEFAULT_THEME;
+    applyTheme(THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length], true);
   }
   if (el("themeBtn")) el("themeBtn").addEventListener("click", toggleTheme);
   if (el("themeBtn2")) el("themeBtn2").addEventListener("click", toggleTheme);
@@ -479,8 +480,8 @@
       var x = i * fs, y = RAIN.drops[i] * fs;
       c.fillStyle = Math.random() > 0.975 ? "#d9ffe2" : "rgba(0, 255, 65, 0.85)";
       c.fillText(ch, x, y);
-      if (y > h && Math.random() > 0.985) RAIN.drops[i] = 0;
-      RAIN.drops[i] += 0.28;
+      if (y > h && Math.random() > 0.99) RAIN.drops[i] = 0;
+      RAIN.drops[i] += 0.18;
     }
     RAIN.raf = requestAnimationFrame(rainStep);
   }
@@ -546,7 +547,8 @@
   if (el("boot")) el("boot").addEventListener("click", function () { el("boot").classList.add("hide"); setTimeout(function () { el("boot").style.visibility = "hidden"; }, 400); });
 
   /* ============================== INIT ============================== */
-  applyTheme(load("theme", (CFG.system && CFG.system.defaultTheme) || "jarvis"));
+  rawDel(NS + "theme");                       // migrate: drop the old auto-saved theme (was forcing cyan)
+  applyTheme(load("theme.user", DEFAULT_THEME), false);
   showView(load("tab", "home"));
   renderAll();
   tickClock();
