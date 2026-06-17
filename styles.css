@@ -67,6 +67,36 @@
   --cat-mind: #cdb27a;
 }
 
+/* MATRIX — phosphor green on black, digital-rain backdrop */
+[data-theme="matrix"] {
+  --bg:        #000a02;
+  --bg-2:      #001405;
+  --panel:     rgba(0, 16, 6, 0.62);
+  --panel-2:   rgba(0, 24, 9, 0.78);
+  --line:      rgba(0, 255, 65, 0.20);
+  --line-soft: rgba(0, 255, 65, 0.08);
+  --text:      #b6ffc2;
+  --text-dim:  #46c161;
+  --muted:     #2c7a40;
+
+  --accent:    #00ff41;
+  --accent-bright: #86ffa1;
+  --accent-deep:   #00b32e;
+  --accent-rgb: 0, 255, 65;
+
+  --gold:      #aaff2b;          /* lime secondary */
+  --gold-rgb:  170, 255, 43;
+
+  --hot:   #ff4136;
+  --warm:  #d8ff3a;
+  --cool:  #1fffa0;
+  --ok:    #00ff66;
+
+  --cat-work: #00ff41;
+  --cat-body: #9dff5a;
+  --cat-mind: #57ffcf;
+}
+
 /* ---- RESET ---------------------------------------------------------------- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
@@ -107,6 +137,11 @@ body::before {                                   /* fine grid */
   opacity: 0.7;
 }
 @keyframes scan { 0% { transform: translateY(-160px); } 100% { transform: translateY(105vh); } }
+.bg-rain {                                        /* Matrix digital rain — only shown in matrix theme */
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: 0; transition: opacity .8s ease;
+}
+[data-theme="matrix"] .bg-rain { opacity: 0.5; }
 
 /* ---- APP SHELL ------------------------------------------------------------ */
 .app { position: relative; z-index: 2; max-width: 1640px; margin: 0 auto; padding: 0 22px 60px; }
@@ -408,5 +443,5 @@ body::before {                                   /* fine grid */
 /* ---- ACCESSIBILITY: reduced motion --------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  .bg-scan { display: none; }
+  .bg-scan, .bg-rain { display: none; }
 }

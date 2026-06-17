@@ -89,14 +89,15 @@ dots shows your last 14 days. Daily habits/vitals reset at **your local midnight
 
 ---
 
-## Two themes
+## Three themes
 
-Top-right toggle (or **⚙ → Switch Theme**):
+The top-right toggle cycles through them (or **⚙ → Switch Theme**):
 
 - **JARVIS** — arc-reactor cyan on near-black (default)
 - **BATMAN** — Batcomputer amber/gold on deeper black
+- **MATRIX** — phosphor green on black, with falling digital-rain code in the background
 
-Your choice is remembered.
+Your choice is remembered. Want Matrix every launch? Set `defaultTheme: "matrix"` in `config.js`.
 
 ---
 

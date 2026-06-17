@@ -445,16 +445,59 @@
   }
   qsa(".nav button").forEach(function (b) { b.addEventListener("click", function () { showView(b.getAttribute("data-view")); }); });
 
-  /* ============================== THEME ============================== */
+  /* ============================== THEME + MATRIX RAIN ============================== */
+  var THEMES = ["jarvis", "batman", "matrix"];
   function applyTheme(th) {
+    if (THEMES.indexOf(th) < 0) th = "jarvis";
     document.documentElement.setAttribute("data-theme", th);
-    var lbl = "◑ " + (th === "batman" ? "BATMAN" : "JARVIS");
-    if (el("themeBtn")) el("themeBtn").textContent = lbl;
+    if (el("themeBtn")) el("themeBtn").textContent = "◑ " + th.toUpperCase();
     save("theme", th);
+    if (th === "matrix") startRain(); else stopRain();
   }
-  function toggleTheme() { applyTheme(document.documentElement.getAttribute("data-theme") === "batman" ? "jarvis" : "batman"); }
+  function toggleTheme() {
+    var cur = document.documentElement.getAttribute("data-theme") || "jarvis";
+    applyTheme(THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length]);
+  }
   if (el("themeBtn")) el("themeBtn").addEventListener("click", toggleTheme);
   if (el("themeBtn2")) el("themeBtn2").addEventListener("click", toggleTheme);
+
+  // ---- digital rain (Matrix theme only) ----
+  var RAIN = { cv: null, ctx: null, raf: 0, drops: null, on: false, fs: 15, bound: false };
+  var GLYPHS = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎ0123456789Z:=*+-<>|".split("");
+  function rainResize() {
+    if (!RAIN.cv) return;
+    RAIN.cv.width = window.innerWidth; RAIN.cv.height = window.innerHeight;
+    var cols = Math.ceil(RAIN.cv.width / RAIN.fs);
+    RAIN.drops = []; for (var i = 0; i < cols; i++) RAIN.drops[i] = Math.random() * -100;
+  }
+  function rainStep() {
+    var c = RAIN.ctx, w = RAIN.cv.width, h = RAIN.cv.height, fs = RAIN.fs;
+    c.fillStyle = "rgba(0, 8, 2, 0.07)"; c.fillRect(0, 0, w, h);
+    c.font = fs + "px ui-monospace, monospace";
+    for (var i = 0; i < RAIN.drops.length; i++) {
+      var ch = GLYPHS[(Math.random() * GLYPHS.length) | 0];
+      var x = i * fs, y = RAIN.drops[i] * fs;
+      c.fillStyle = Math.random() > 0.975 ? "#d9ffe2" : "rgba(0, 255, 65, 0.85)";
+      c.fillText(ch, x, y);
+      if (y > h && Math.random() > 0.975) RAIN.drops[i] = 0;
+      RAIN.drops[i] += 0.5;
+    }
+    RAIN.raf = requestAnimationFrame(rainStep);
+  }
+  function startRain() {
+    if (RM || RAIN.on) return;
+    RAIN.cv = document.getElementById("rain"); if (!RAIN.cv) return;
+    RAIN.ctx = RAIN.cv.getContext("2d");
+    RAIN.cv.style.opacity = "0.58";
+    rainResize(); RAIN.on = true;
+    if (!RAIN.bound) { window.addEventListener("resize", rainResize); RAIN.bound = true; }
+    rainStep();
+  }
+  function stopRain() {
+    if (RAIN.raf) cancelAnimationFrame(RAIN.raf);
+    RAIN.raf = 0; RAIN.on = false;
+    if (RAIN.cv) { RAIN.cv.style.opacity = "0"; if (RAIN.ctx) RAIN.ctx.clearRect(0, 0, RAIN.cv.width, RAIN.cv.height); }
+  }
 
   /* ============================== SETTINGS DRAWER ============================== */
   function drawer(open) { el("drawer").classList.toggle("open", open); el("drawerBg").classList.toggle("open", open); }
