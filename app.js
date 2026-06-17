@@ -479,8 +479,8 @@
       var x = i * fs, y = RAIN.drops[i] * fs;
       c.fillStyle = Math.random() > 0.975 ? "#d9ffe2" : "rgba(0, 255, 65, 0.85)";
       c.fillText(ch, x, y);
-      if (y > h && Math.random() > 0.975) RAIN.drops[i] = 0;
-      RAIN.drops[i] += 0.5;
+      if (y > h && Math.random() > 0.985) RAIN.drops[i] = 0;
+      RAIN.drops[i] += 0.28;
     }
     RAIN.raf = requestAnimationFrame(rainStep);
   }
